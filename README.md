@@ -1,3 +1,3 @@
-# Примеры использования Sipuni API на PHP
+# Использование Sipuni API на PHP
 
 
