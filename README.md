@@ -1,2 +1,3 @@
-# sipuni-api-php
-Examples of Supuni API usage
+# Примеры использования Sipuni API на PHP
+
+
