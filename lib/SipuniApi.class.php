@@ -51,7 +51,7 @@ class SipuniApi {
     }
 
     /*
-     * Allocates a new static number. If the $forwardTo is specified
+     * Allocates a new static number.
      */
     public function allocateStatic($rangeId, $forwardTo){
 
@@ -70,6 +70,4 @@ class SipuniApi {
 
         return $response;
     }
-
-
 }
