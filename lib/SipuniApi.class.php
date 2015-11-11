@@ -44,11 +44,10 @@ class SipuniApi {
             ->addHeaders($this->getAuthHeader())
             ->send();
 
-        if($this->isSuccess($response)){
+        if(property_exists($response, 'body')){
             return $response->body;
-        }else{
-            return null;
         }
+        return null;
     }
 
     /**
@@ -61,9 +60,9 @@ class SipuniApi {
         if(!$ranges){
             return null;
         }
-        for($i=0; $i < count($ranges->body); $i++){
-            if( strpos($ranges->body[$i]->title, $nameSubstring) ){
-                return $ranges->body[$i];
+        for($i=0; $i < count($ranges); $i++){
+            if( strpos($ranges[$i]->title, $nameSubstring) ){
+                return $ranges[$i];
             }
         }
         return null;
@@ -126,6 +125,7 @@ class SipuniApi {
     }
 
     protected function isSuccess($response){
+        print_r($response->body);
         return $response && $response->body && property_exists($response->body, 'success') && $response->body->success;
     }
 }

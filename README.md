@@ -1,4 +1,4 @@
-# Примеры использование Sipuni API на PHP
+# Примеры использования Sipuni API на PHP
 
 ### Перед запуском
 
@@ -31,11 +31,31 @@ $php allocate_static
  ```
  $range = $api->findRange('499');
  ```
+ Результат:
+ ```
+ stdClass Object
+ (
+    [id] => 1
+    [title] => Москва 499
+ )
+ ```
 
  Теперь можно выделить статический номер.
  ```
  $result = $api->allocateStatic($range->id, '+749912312312', 'For newspapers');
  ```
+ Результат:
+ ```
+ stdClass Object
+ (
+     [number] => 74996475675
+     [success] => 1
+ )
+ ```
 
+ Когда номер больше не нушен, его нужно освободить.
+ ```
+ $api->releaseStatic('749912312312');
+ ```
 
 
