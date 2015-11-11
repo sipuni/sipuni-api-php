@@ -75,11 +75,12 @@ class SipuniApi {
      * @param string $forwardTo a phone number to forward calls to
      * @return object|null object with a number property containing a newly allocated number or null if failed to allocate.
      */
-    public function allocateStatic($rangeId, $forwardTo){
+    public function allocateStatic($rangeId, $forwardTo, $description){
 
         $args = array(
             'range'=>$rangeId,
-            'forward_to'=>$forwardTo
+            'forward_to'=>$forwardTo,
+            'description'=>$description
         );
 
         $apiMethodUrl = $this->getMethodUrl('/calltracking/static/number/');

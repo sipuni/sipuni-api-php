@@ -16,7 +16,7 @@ function main(){
     print_r($range);
 
     // Выделить статический номер и создать для него перенаправление на номер +749912312312
-    $result = $api->allocateStatic($range->id, '+749912312312');
+    $result = $api->allocateStatic($range->id, '+749912312312', 'For newspapers');
     print("Result of allocation:\n");
     print_r($result);
 }

@@ -34,7 +34,7 @@ $php allocate_static
 
  Теперь можно выделить статический номер.
  ```
- $result = $api->allocateStatic($range->id, '+749912312312');
+ $result = $api->allocateStatic($range->id, '+749912312312', 'For newspapers');
  ```
 
 
