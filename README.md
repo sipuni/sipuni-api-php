@@ -14,7 +14,9 @@ $php allocate_static
 
 ### Работа с классом-оберткой для Sipuni API
 
-Для работы необходимо подключить архив httpful.phar. Он содержит классы для работы с REST API.
+Для работы, помимо файла SipuniApi.class.php необходимо подключить архив httpful.phar.
+Это библиотека для работы с REST API. Ее можно подключать также при помощи composer.
+Подробнее читайте на сайте библиотеки [phphttpclient.com](http://phphttpclient.com).
 
  ```
  require_once ('../lib/httpful.phar');
@@ -51,7 +53,7 @@ $php allocate_static
 
  Когда номер больше не нушен, его нужно освободить.
  ```
- $success = $api->releaseStatic('749912312312');
+ $success = $api->releaseStatic('74996475675');
  ```
  Результат:
   ```
