@@ -34,7 +34,8 @@ class SipuniApi {
 
     /**
      * Gets a list of available number ranges
-     * @return array with ranges of null if failed to get ranges.
+     * @throws \Exception
+     * @return array with ranges.
      * Array contains objects with id and title properties.
      */
     public function ranges(){
@@ -44,22 +45,25 @@ class SipuniApi {
             ->addHeaders($this->getAuthHeader())
             ->send();
 
+        $msg = 'Unable to get ranges';
         if(property_exists($response, 'body')){
-            return $response->body;
+            if(is_array($response->body)){
+                return $response->body;
+            }else{
+                $msg = $response->raw_body;
+            }
         }
-        return null;
+        throw new \Exception($msg);
     }
 
     /**
      * Finds a single range containing the search substring in the title
+     * @throws \Exception
      * @param string $nameSubstring a search substring, usually an area code, e.g. 495 for Moscow
      * @return string|null range object or null. A range object contains id and title properties.
      */
     public function findRange($nameSubstring){
         $ranges = $this->ranges();
-        if(!$ranges){
-            return null;
-        }
         for($i=0; $i < count($ranges); $i++){
             if( strpos($ranges[$i]->title, $nameSubstring) ){
                 return $ranges[$i];
@@ -70,10 +74,11 @@ class SipuniApi {
 
     /**
      * Allocates a new static number.
+     * @throws \Exception
      * @param integer $rangeId identifier of range
      * @param string $forwardTo a phone number to forward calls to
      * @param string $description a comment with purpose of the number
-     * @return object|null object with a number property containing a newly allocated number or null if failed to allocate.
+     * @return string a newly allocated number or null if failed to allocate.
      */
     public function allocateStatic($rangeId, $forwardTo, $description){
 
@@ -92,15 +97,20 @@ class SipuniApi {
             ->body(json_encode($args))
             ->send();
 
-        if($this->isSuccess($response)){
-            return $response->body;
-        }else{
-            return null;
+        $msg = 'Unable to allocate';
+        if(property_exists($response, 'body')){
+            if($response->body->success){
+                return $response->body->number;
+            }else{
+                $msg = $response->raw_body;
+            }
         }
+        throw new \Exception($msg);
     }
 
     /**
      * Release a static number.
+     * @throws \Exception
      * @param string $number a number to release
      * @return object|null
      */
@@ -113,11 +123,15 @@ class SipuniApi {
             ->addHeaders($this->getAuthHeader())
             ->send();
 
-        if($this->isSuccess($response)){
-            return $response->body;
-        }else{
-            return null;
+        $msg = 'Unable to release';
+        if(property_exists($response, 'body')){
+            if(property_exists($response->body, 'success') && $response->body->success){
+                return true;
+            }else{
+                $msg = $response->raw_body;
+            }
         }
+        throw new \Exception($msg);
     }
 
     protected function getAuthHeader(){

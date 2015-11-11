@@ -42,20 +42,22 @@ $php allocate_static
 
  Теперь можно выделить статический номер.
  ```
- $result = $api->allocateStatic($range->id, '+749912312312', 'For newspapers');
+ $number = $api->allocateStatic($range->id, '+749912312312', 'For newspapers');
  ```
  Результат:
  ```
- stdClass Object
- (
-     [number] => 74996475675
-     [success] => 1
- )
+ '74996475675'
  ```
 
  Когда номер больше не нушен, его нужно освободить.
  ```
- $api->releaseStatic('749912312312');
+ $success = $api->releaseStatic('749912312312');
  ```
+ Результат:
+  ```
+  true
+  ```
+
+ Все методы создают исключение \\Exception, в случае ошибок.
 
 
