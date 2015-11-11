@@ -73,6 +73,7 @@ class SipuniApi {
      * Allocates a new static number.
      * @param integer $rangeId identifier of range
      * @param string $forwardTo a phone number to forward calls to
+     * @param string $description a comment with purpose of the number
      * @return object|null object with a number property containing a newly allocated number or null if failed to allocate.
      */
     public function allocateStatic($rangeId, $forwardTo, $description){
