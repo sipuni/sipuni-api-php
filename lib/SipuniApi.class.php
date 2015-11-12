@@ -134,6 +134,32 @@ class SipuniApi {
         throw new \Exception($msg);
     }
 
+    /**
+     * Gets a public url for the number statistics
+     * @param $number
+     */
+    public function getStatisticsUrl($number){
+        $apiMethodUrl = $this->getMethodUrl("/numbers/statistics/url/");
+        $args = array('number'=>$number);
+
+        $response = \Httpful\Request::put($apiMethodUrl)
+            ->sendsJson()
+            ->expectsJson()
+            ->addHeaders($this->getAuthHeader())
+            ->body(json_encode($args))
+            ->send();
+
+        $msg = 'Unable to get url';
+        if(property_exists($response, 'body')){
+            if($response->body->success){
+                return $response->body->url;
+            }else{
+                $msg = $response->raw_body;
+            }
+        }
+        throw new \Exception($msg);
+    }
+
     protected function getAuthHeader(){
         return array('Authorization'=>"Token {$this->apiKey}");
     }
