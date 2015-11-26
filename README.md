@@ -86,9 +86,7 @@ $php allocate_static
  ```
  В результате выдается массив со статистикой.
 
- ua_client_id - идентификатор client_id Universal Analtics
- number - номер телефона на который был звонок
- source_id - номер абонента
+
  ```
  Array
  (
@@ -120,4 +118,7 @@ $php allocate_static
  )
  ```
 
+ * ua_client_id - идентификатор client_id Universal Analtics
+ * number - номер телефона на который был звонок
+ * source_id - номер абонента
 
