@@ -17,7 +17,7 @@ function main(){
     $api = new SipuniApi(SIPUNI_API_KEY);
 
     try{
-        $url = $api->getStatisticsUrl('+749912312312');
+        $url = $api->getStatisticsUrl('74996476965');
         print("Statistics url: {$url}\n");
 
     }catch (\Exception $e){

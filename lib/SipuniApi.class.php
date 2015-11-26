@@ -137,6 +137,7 @@ class SipuniApi {
     /**
      * Gets a public url for the number statistics
      * @param $number
+     * @throws \Exception
      */
     public function getStatisticsUrl($number){
         $apiMethodUrl = $this->getMethodUrl("/numbers/statistics/url/");
@@ -160,6 +161,28 @@ class SipuniApi {
         throw new \Exception($msg);
     }
 
+    public function getStatisticsHits($campaignId, $dateFrom, $dateTo){
+        $apiMethodUrl = $this->getMethodUrl("/calltracking/statistics/hits/");
+        $apiMethodUrl = $this->appendUr($apiMethodUrl, 'cid', $campaignId);
+        $apiMethodUrl= $this->appendUr($apiMethodUrl, 'date_from', $dateFrom);
+        $apiMethodUrl = $this->appendUr($apiMethodUrl, 'date_to', $dateTo);
+
+        $response = \Httpful\Request::get($apiMethodUrl)
+            ->expectsJson()
+            ->addHeaders($this->getAuthHeader())
+            ->send();
+
+        $msg = 'Unable to get statistics';
+        if(property_exists($response, 'body')){
+            if(is_array($response->body)){
+                return $response->body;
+            }else{
+                $msg = $response->raw_body;
+            }
+        }
+        throw new \Exception($msg);
+    }
+
     protected function getAuthHeader(){
         return array('Authorization'=>"Token {$this->apiKey}");
     }
@@ -168,4 +191,15 @@ class SipuniApi {
         print_r($response->body);
         return $response && $response->body && property_exists($response->body, 'success') && $response->body->success;
     }
+
+    protected function appendUr($url, $key, $value) {
+        $url = preg_replace('/(.*)(?|&)' . $key . '=[^&]+?(&)(.*)/i', '$1$2$4', $url . '&');
+        $url = substr($url, 0, -1);
+        if (strpos($url, '?') === false) {
+            return ($url . '?' . $key . '=' . $value);
+        } else {
+            return ($url . '&' . $key . '=' . $value);
+        }
+    }
+
 }
