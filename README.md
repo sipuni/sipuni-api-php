@@ -84,7 +84,8 @@ $php allocate_static
  ```
  $hits = $api->getStatisticsHits('140', 1441111200, 1441411200);
  ```
- В результате выдается массив.
+ В результате выдается массив со статистикой.
+
  ua_client_id - идентификатор client_id Universal Analtics
  number - номер телефона на который был звонок
  source_id - номер абонента
