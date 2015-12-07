@@ -98,7 +98,8 @@ $php allocate_static
              [hit_price] => 5.00
              [occurred] => 2015-11-25T20:02:15.448142Z
              [number] => 74996477486
-             [visitor_source] =>
+             [visitor_source] => 'https://yandex.ru/yandsearch?clid=2224314&text=sipuni...'
+             [visitor_target] => 'http://sipuni.ru/?utm_source=market....'
              [source_id] => 74996479797
              [id] => 1465
          ),
