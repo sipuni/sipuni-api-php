@@ -110,7 +110,8 @@ $php allocate_static
              [hit_price] => 5.00
              [occurred] => 2015-11-25T20:02:15.448142Z
              [number] => 74996477486
-             [visitor_source] =>
+             [visitor_source] => 'https://yandex.ru/yandsearch?clid=2224314&text=sipuni...'
+             [visitor_target] => 'http://sipuni.ru/?utm_source=market....'
              [source_id] => 74996479797
              [id] => 1465
          )
@@ -121,4 +122,6 @@ $php allocate_static
  * ua_client_id - идентификатор client_id Universal Analtics
  * number - номер телефона на который был звонок
  * source_id - номер абонента
+ * visitor_source - сайт-источник перехода посетителя
+ * visitor_target - страница, на которую перешел посетитель в начале сессии
 
