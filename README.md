@@ -122,3 +122,33 @@ $php allocate_static
  * number - номер телефона на который был звонок
  * source_id - номер абонента
 
+
+### Задать вебхук для обработки событий коллтрекинга
+
+Вы можете задать ULR обратного вызова (Webhook) который будет вызван каждый раз,
+когда отслеживается входящий звонок.
+```
+$api->setPreferences(array('calltracking_webhook'=>'http://abc.com/webhook.php'))
+```
+
+В результате, адрес http://abc.com/webhook.php будет вызван при отслеженном звонке,
+и он получит следующую информацию в json формате
+```
+{
+      ua_client_id: "123141241.12124124",
+      number: "74996477486",
+      visitor_source: "http://yandex.ru/yandsearch?clid=2224314&text=sipuni…"
+      visitor_target: "http://sipuni.ru/?utm_source=market....",
+      source_id: "74996479797"
+}
+```
+ * ua_client_id - идентификатор посетителя Universal (Google) Analytics
+ * number - номер, на который произошел звонок,
+ * source_id - номер абонента,
+ * visitor_source - сайт, с которого пришел посетитель на ваш сайт в первый раз,
+ * visitor_target - страница, на которую перешел посетитель на вашем сайте в первый раз
+
+Для удаления вебхука, вызовите setPreferences с пустым адресом вебхука:
+```
+$api->setPreferences(array('calltracking_webhook'=>''))
+```

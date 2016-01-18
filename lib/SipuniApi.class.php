@@ -183,6 +183,56 @@ class SipuniApi {
         throw new \Exception($msg);
     }
 
+    /**
+     * Sets preferences.
+     * @param array $preferences
+     * Example of $preferences
+     * {
+     *   'calltracking_webhook':'<url>'
+     * }
+     * @return True or exception
+     * @throws \Exception
+     */
+    public function setPreferences(array $preferences){
+
+        $apiMethodUrl = $this->getMethodUrl('/preferences/');
+
+        $response = \Httpful\Request::put($apiMethodUrl)
+            ->sendsJson()
+            ->expectsJson()
+            ->addHeaders($this->getAuthHeader())
+            ->body(json_encode($preferences))
+            ->send();
+
+        if(property_exists($response, 'body')){
+            return $response->body;
+        }else{
+            throw new \Exception($response->raw_body);
+        }
+    }
+
+    /**
+     * Returns an array with current preferences
+     * @return array with current preferences
+     * @throws \Exception
+     */
+    public function getPreferences(){
+
+        $apiMethodUrl = $this->getMethodUrl('/preferences/');
+
+        $response = \Httpful\Request::get($apiMethodUrl)
+            ->expectsJson()
+            ->addHeaders($this->getAuthHeader())
+            ->send();
+
+        if(property_exists($response, 'body')){
+            return $response->body;
+        }else{
+            throw new \Exception($response->raw_body);
+        }
+    }
+
+
     protected function getAuthHeader(){
         return array('Authorization'=>"Token {$this->apiKey}");
     }
