@@ -18,14 +18,14 @@ $php allocate_static
 Это библиотека для работы с REST API. Ее можно подключать также при помощи composer.
 Подробнее читайте на сайте библиотеки [phphttpclient.com](http://phphttpclient.com).
 
- ```
+ ```php
  require_once ('../lib/httpful.phar');
  require_once ('../lib/SipuniApi.class.php');
  use sipuni\SipuniApi;
  ```
 
  В конструктор класса подайте API ключ, как его получить читайте в разделе Перед запуском.
- ```
+ ```php
  $api = new SipuniApi($key);
  ```
 
@@ -37,7 +37,7 @@ $php allocate_static
 При выделении номера требуется задать диапазон номеров, в котором будет выделен номер.
  Например, найдем диапазон номеров с кодом 499.
 
- ```
+ ```php
  $range = $api->findRange('499');
  ```
  Для получения полного списка диапазонов воспользуйтесь методом `$api->ranges()`.
@@ -54,7 +54,7 @@ $php allocate_static
 
  Теперь можно выделить статический номер и сделать переадресацию на номер 74997778899.
  В качестве комментария - 'For newspapers' предположим, что номер будет использоваться для рекламы в газетах.
- ```
+ ```php
  $number = $api->allocateStatic($range->id, '74997778899', 'For newspapers');
  ```
  Результат, выделен номер:
@@ -81,7 +81,7 @@ $php allocate_static
  Первый параметр cid (campaign id) это идентификатор кампании коллтрекинга. Его можно взять
  из JavaScript кода коллтркинга, (переменная ct_cid=NNN)
  Два других параметра - дата с и по которую выдать статистику. Задается в формате unix timestamp.
- ```
+ ```php
  $hits = $api->getStatisticsHits('140', 1441111200, 1441411200);
  ```
  В результате выдается массив со статистикой.
@@ -131,7 +131,7 @@ $php allocate_static
 
 Вы можете задать URL обратного вызова (Webhook) который будет вызван каждый раз,
 когда отслеживается входящий звонок.
-```
+```php
 $api->setPreferences(array('calltracking_webhook'=>'http://abc.com/webhook.php'))
 ```
 
@@ -151,8 +151,13 @@ $api->setPreferences(array('calltracking_webhook'=>'http://abc.com/webhook.php')
  * source_id - номер абонента,
  * visitor_source - сайт, с которого пришел посетитель на ваш сайт в первый раз,
  * visitor_target - страница, на которую перешел посетитель на вашем сайте в первый раз
+  
+Пример декодирования полученных данных в файле обработчике
+```php
+$data = json_decode(file_get_contents('php://input'), true);
+```
 
 Для удаления вебхука, вызовите setPreferences с пустым адресом вебхука:
-```
+```php
 $api->setPreferences(array('calltracking_webhook'=>''))
 ```
