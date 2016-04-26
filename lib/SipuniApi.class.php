@@ -161,11 +161,12 @@ class SipuniApi {
         throw new \Exception($msg);
     }
 
-    public function getStatisticsHits($campaignId, $dateFrom, $dateTo){
+    public function getStatisticsHits($campaignId, $dateFrom, $dateTo, $sourceId=null){
         $apiMethodUrl = $this->getMethodUrl("/calltracking/statistics/hits/");
         $apiMethodUrl = $this->appendUr($apiMethodUrl, 'cid', $campaignId);
         $apiMethodUrl= $this->appendUr($apiMethodUrl, 'date_from', $dateFrom);
         $apiMethodUrl = $this->appendUr($apiMethodUrl, 'date_to', $dateTo);
+        $apiMethodUrl = $this->appendUr($apiMethodUrl, 'source_id', $sourceId);
 
         $response = \Httpful\Request::get($apiMethodUrl)
             ->expectsJson()
